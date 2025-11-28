@@ -1,0 +1,264 @@
+-------------------- Log Start | Fri Nov 28 13:15:39 2025 --------------------
+platform: Linux-5.16.17-sun50iw9-aarch64-with-glibc2.31
+data_path: /home/biqu/printer_data
+is_default_data_path: False
+config_file: /home/biqu/printer_data/config/moonraker.conf
+backup_config: /home/biqu/printer_data/config/.moonraker.conf.bkp
+startup_warnings: []
+verbose: False
+debug: False
+asyncio_debug: False
+is_backup_config: False
+is_python_package: False
+instance_uuid: 35521420d0a447f9a0aa6df27cb220b0
+unix_socket_path: /home/biqu/printer_data/comms/moonraker.sock
+structured_logging: False
+software_version: v0.9.3-73-g5ee0adc
+git_branch: master
+git_remote: origin
+git_repo_url: https://github.com/Arksine/moonraker
+modified_files: []
+unofficial_components: []
+log_file: /home/biqu/printer_data/logs/moonraker.log
+python_version: 3.9.2 (default, Mar 20 2025, 02:07:39)  [GCC 10.2.1 20210110]
+launch_args: /home/biqu/moonraker-env/bin/python /home/biqu/moonraker/moonraker/moonraker.py -d /home/biqu/printer_data
+msgspec_enabled: True
+uvloop_enabled: True
+
+#################### Moonraker Configuration ####################
+
+[server]
+host = 0.0.0.0
+port = 7125
+klippy_uds_address = /home/biqu/printer_data/comms/klippy.sock
+
+[authorization]
+trusted_clients = 
+	192.168.0.0/16
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FC00::/7
+	FE80::/10
+	::1/128
+cors_domains = 
+	*.lan
+	*.local
+	*.home
+	*://localhost
+	*://localhost:*
+	*://my.mainsail.xyz
+	*://app.fluidd.xyz
+
+[octoprint_compat]
+
+[history]
+
+[update_manager]
+channel = dev
+refresh_interval = 168
+
+[update_manager mainsail]
+path = /home/biqu/mainsail
+repo = mainsail-crew/mainsail
+channel = stable
+type = web
+
+[update_manager mainsail-config]
+managed_services = klipper
+origin = https://github.com/mainsail-crew/mainsail-config.git
+path = /home/biqu/mainsail-config
+primary_branch = master
+type = git_repo
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+managed_services = crowsnest
+install_script = tools/pkglist.sh
+
+[update_manager timelapse]
+type = git_repo
+primary_branch = main
+path = ~/moonraker-timelapse
+origin = https://github.com/mainsail-crew/moonraker-timelapse.git
+managed_services = klipper moonraker
+
+[timelapse]
+output_path = ~/timelapse/
+frame_path = /tmp/timelapse/
+ffmpeg_binary_path = /usr/bin/ffmpeg
+
+[update_manager Demon_Klipper_Essentials_Unified]
+type = git_repo
+path = ~/printer_data/config/Demon_Klipper_Essentials_Unified
+origin = https://github.com/3DPrintDemon/Demon_Klipper_Essentials_Unified.git
+primary_branch = main
+is_system_service = False
+managed_services = klipper
+
+[file_manager]
+enable_object_processing = True
+
+#################################################################
+All Configuration Files:
+/home/biqu/printer_data/config/moonraker.conf
+#################################################################
+Loading Sqlite database provider. Sqlite Version: 3.34.1
+Unsafe Shutdown Count: 124
+
+System Info:
+
+***python***
+  version: (3, 9, 2, 'final', 0)
+  version_string: 3.9.2 (default, Mar 20 2025, 02:07:39)  [GCC 10.2.1 20210110]
+
+***cpu_info***
+  cpu_count: 4
+  bits: 64bit
+  processor: aarch64
+  cpu_desc: 
+  serial_number: 
+  hardware_desc: 
+  model: 
+  total_memory: 1010632
+  memory_units: kB
+
+***sd_info***
+
+***distribution***
+  name: Debian GNU/Linux 11 (bullseye)
+  id: debian
+  version: 11
+  version_parts: {'major': '11', 'minor': '', 'build_number': ''}
+  like: 
+  codename: bullseye
+  release_info: {}
+  kernel_version: 5.16.17-sun50iw9
+
+***virtualization***
+  virt_type: none
+  virt_identifier: none
+
+***network***
+
+***canbus***
+
+***Allowed Services***
+  klipper_mcu
+  webcamd
+  MoonCord
+  KlipperScreen
+  moonraker-telegram-bot
+  moonraker-obico
+  sonar
+  crowsnest
+  octoeverywhere
+  ratos-configurator
+Module libcamera unavailable, import failed
+
+Systemd unit moonraker.service:
+unit_name: moonraker.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['sysinit.target', 'network-online.target', 'system.slice', '-.mount']
+**After=['network-online.target', 'sysinit.target', 'system.slice', 'systemd-journald.socket', 'basic.target', '-.mount']
+**SupplementaryGroups=['moonraker-admin']
+**EnvironmentFiles=/home/biqu/printer_data/systemd/moonraker.env
+**ExecStart=/home/biqu/moonraker-env/bin/python $MOONRAKER_ARGS
+**WorkingDirectory=/home/biqu/moonraker
+**FragmentPath=/etc/systemd/system/moonraker.service
+**Description=API Server for Klipper SV1
+**User=biqu
+
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['sysinit.target', '-.mount', 'system.slice']
+**After=['basic.target', 'system.slice', 'network-online.target', 'sysinit.target', '-.mount', 'systemd-journald.socket']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/biqu/printer_data/systemd/klipper.env
+**ExecStart=/home/biqu/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/biqu/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=biqu
+Git Repo moonraker: Warnings detected:
+  Repo has untracked source files: ['moonraker/components/timelapse.py']
+Git Repo klipper: Warnings detected:
+  Repo has untracked source files: ['klippy/extras/gcode_shell_command.py', 'klippy/extras/probe_pressure.py', 'klippy/extras/z_offset_calibration.py']
+Git Repo mainsail-config: No warnings detected
+Git Repo crowsnest: No warnings detected
+Git Repo timelapse: No warnings detected
+Git Repo Demon_Klipper_Essentials_Unified: No warnings detected
+2025-11-28 14:15:39,789 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2025-11-28 14:15:39,959 [server.py:add_log_rollover_item()] - 
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['-.mount', 'system.slice', 'sysinit.target']
+**After=['-.mount', 'basic.target', 'network-online.target', 'system.slice', 'systemd-journald.socket', 'sysinit.target']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/biqu/printer_data/systemd/klipper.env
+**ExecStart=/home/biqu/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/biqu/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=biqu
+2025-11-28 14:15:55,686 [server.py:add_log_rollover_item()] - Klipper Version: v0.13.0-51-gbfda326c-dirty
+2025-11-28 14:17:27,434 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2025-11-28 14:17:27,439 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2025-11-28 14:17:27,446 [klippy_connection.py:_check_ready()] - 
+mcu 'eddy': Unable to connect
+Once the underlying issue is corrected, use the
+"FIRMWARE_RESTART" command to reset the firmware, reload the
+config, and restart the host software.
+Error configuring printer
+
+2025-11-28 14:29:30,331 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.13
+2025-11-28 14:29:30,345 [application.py:log_request()] - 101 GET /websocket (192.168.1.13) [_TRUSTED_USER_] 19.78ms
+2025-11-28 14:29:30,347 [websockets.py:open()] - Websocket Opened: ID: 281472905544896, Proxied: True, User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36, Host Name: sv08.meine2cent.home
+2025-11-28 14:29:30,356 [websockets.py:_handle_identify()] - Websocket 281472905544896 Client Identified - Name: mainsail, Version: 2.13.2, Type: web
+2025-11-28 14:29:37,146 [common.py:build_error()] - JSON-RPC Request Error - Requested Method: printer.gcode.script, Code: 400, Message: 'NoneType' object has no attribute 'send'
+2025-11-28 14:29:37,286 [klippy_connection.py:_process_status_update()] - Klippy has shutdown
+2025-11-28 14:29:37,291 [proc_stats.py:_handle_shutdown()] - 
+Moonraker System Usage Statistics:
+System Time: 1764336547.645983, Usage: 2.57%, Memory: 48992 kB
+System Time: 1764336548.647022, Usage: 1.43%, Memory: 48992 kB
+System Time: 1764336549.648028, Usage: 1.46%, Memory: 48992 kB
+System Time: 1764336550.647302, Usage: 1.47%, Memory: 48992 kB
+System Time: 1764336551.651584, Usage: 1.25%, Memory: 48992 kB
+System Time: 1764336552.652373, Usage: 1.53%, Memory: 48992 kB
+System Time: 1764336553.654794, Usage: 1.44%, Memory: 48992 kB
+System Time: 1764336554.655661, Usage: 1.55%, Memory: 48992 kB
+System Time: 1764336555.655830, Usage: 1.43%, Memory: 48992 kB
+System Time: 1764336556.658545, Usage: 1.3%, Memory: 48992 kB
+System Time: 1764336557.661577, Usage: 3.17%, Memory: 48992 kB
+System Time: 1764336558.661612, Usage: 1.64%, Memory: 48992 kB
+System Time: 1764336559.663140, Usage: 1.47%, Memory: 48992 kB
+System Time: 1764336560.660802, Usage: 1.52%, Memory: 48992 kB
+System Time: 1764336561.661965, Usage: 1.25%, Memory: 48992 kB
+System Time: 1764336562.661926, Usage: 1.33%, Memory: 48992 kB
+System Time: 1764336563.664841, Usage: 1.27%, Memory: 48992 kB
+System Time: 1764336564.663785, Usage: 1.51%, Memory: 48992 kB
+System Time: 1764336565.665104, Usage: 1.24%, Memory: 48992 kB
+System Time: 1764336566.665029, Usage: 1.33%, Memory: 48992 kB
+System Time: 1764336567.667394, Usage: 2.67%, Memory: 48992 kB
+System Time: 1764336568.667339, Usage: 1.41%, Memory: 48992 kB
+System Time: 1764336569.668463, Usage: 1.25%, Memory: 48992 kB
+System Time: 1764336571.055442, Usage: 52.37%, Memory: 49216 kB
+System Time: 1764336572.044377, Usage: 64.72%, Memory: 49444 kB
+System Time: 1764336573.045047, Usage: 0.88%, Memory: 49444 kB
+System Time: 1764336574.047177, Usage: 1.25%, Memory: 49444 kB
+System Time: 1764336575.051869, Usage: 0.96%, Memory: 49444 kB
+System Time: 1764336576.053032, Usage: 2.04%, Memory: 49444 kB
+System Time: 1764336577.057043, Usage: 1.51%, Memory: 49444 kB
+CPU Temperature: 33.029
